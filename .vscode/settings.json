@@ -1,0 +1,11 @@
+{
+  "files.defaultLanguage": "",
+  "pythonIndent.trimLinesWithOnlyWhitespace": true,
+  "editor.defaultFoldingRangeProvider": "donjayamanne.python-environment-manager",
+  "python.languageServer": "Pylance",
+  "editor.defaultFormatter": "ms-python.black-formatter",
+  "editor.formatOnSave": true,
+  // "editor.defaultFormatter": "mikoz.black-py",
+  // "python.analysis.autoImportCompletions": true,
+  // "python.analysis.completeFunctionParens": true,
+}

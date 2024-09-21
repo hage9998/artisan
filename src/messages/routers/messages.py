@@ -10,7 +10,7 @@ router = APIRouter(prefix="/messages")
 
 
 @router.get("/user/{user_id}")
-def get_all_messages_by_user_id(user_id: str, db: Session = Depends(get_db)):
+def get_all_messages_by_user(user_id: str, db: Session = Depends(get_db)):
     return get_all_messages_by_user_id(db=db, user_id=user_id)
 
 

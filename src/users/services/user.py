@@ -6,6 +6,27 @@ from src.users.models.users import User
 
 
 def create_new_user(db: Session, user: UserCreateDTO):
+    """
+    Creates a new user in the database with a hashed password.
+
+    Parameters
+    ----------
+    db : Session
+        The database session.
+    user : UserCreateDTO
+        The data transfer object containing the user's information.
+
+    Raises
+    ------
+    HTTPException
+        If the email is already registered (400).
+
+    Returns
+    -------
+    User
+        The User object that was created.
+    """
+
     hashed_password = bcrypt.hash(user.password)
     new_user = User(name=user.name, email=user.email, password=hashed_password)
 

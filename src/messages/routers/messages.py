@@ -3,15 +3,14 @@ from src.database.session import get_db
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from src.messages.enums.sender_enum import SenderEnum
 from src.messages.services.websocket_manager import manager
-from src.messages.services.messages import save_message
-from src.messages.models.messages import Message
+from src.messages.services.messages import get_all_messages_by_user_id, save_message
 
 router = APIRouter(prefix="/messages")
 
 
 @router.get("/user/{user_id}")
-def get_bla(user_id: str, db: Session = Depends(get_db)):
-    return db.query(Message).filter(Message.user_id == user_id).all()
+def get_all_messages_by_user_id(user_id: str, db: Session = Depends(get_db)):
+    return get_all_messages_by_user_id(db=db, user_id=user_id)
 
 
 @router.websocket("/ws/chat/{user_id}")

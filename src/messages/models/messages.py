@@ -14,3 +14,10 @@ class Message(Base):
     created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
 
     user = relationship("User", back_populates="messages")
+
+    def to_dict(self):
+        return {
+            "sender": self.sender,
+            "message": self.message,
+            "created_at": self.created_at,
+        }

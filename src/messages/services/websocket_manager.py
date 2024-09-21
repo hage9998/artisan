@@ -1,4 +1,7 @@
+from typing import Dict
 from fastapi import WebSocket
+
+from src.messages.dtos.message_answer import MessageAnswerDTO
 
 
 class ConnectionManager:
@@ -12,8 +15,10 @@ class ConnectionManager:
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
 
-    async def send_personal_message(self, message: str, websocket: WebSocket):
-        await websocket.send_text(message)
+    async def send_personal_message(
+        self, message: MessageAnswerDTO, websocket: WebSocket
+    ):
+        await websocket.send_json(message.model_dump_json())
 
 
 manager = ConnectionManager()

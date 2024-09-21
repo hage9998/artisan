@@ -18,7 +18,7 @@ class ConnectionManager:
     async def send_personal_message(
         self, message: MessageAnswerDTO, websocket: WebSocket
     ):
-        await websocket.send_json(message.model_dump_json())
+        await websocket.send_json(message.model_dump())
 
 
 manager = ConnectionManager()

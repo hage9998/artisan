@@ -19,5 +19,5 @@ class Message(Base):
         return {
             "sender": self.sender,
             "message": self.message,
-            "created_at": self.created_at,
+            "createdAt": self.created_at.isoformat(),
         }

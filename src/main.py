@@ -4,6 +4,7 @@ from src.database.base import Base
 from src.database.session import engine
 from src.users.routers import users
 from src.messages.routers import messages
+from src.auth.routers import auth
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -23,9 +24,10 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["Content-Type"],
+    allow_headers=["*"],
 )
 
 
 app.include_router(users.router)
 app.include_router(messages.router)
+app.include_router(auth.router)

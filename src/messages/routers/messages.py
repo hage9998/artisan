@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from src.auth.services.auth import get_current_user
 from src.database.session import get_db
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from src.messages.dtos.message_answer import MessageAnswerDTO
@@ -10,7 +11,9 @@ router = APIRouter(prefix="/messages")
 
 
 @router.get("/user/{user_id}")
-def get_all_messages_by_user(user_id: str, db: Session = Depends(get_db)):
+def get_all_messages_by_user(
+    user_id: str, db: Session = Depends(get_db), current_user=Depends(get_current_user)
+):
     return get_all_messages_by_user_id(db=db, user_id=user_id)
 
 

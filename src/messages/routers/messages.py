@@ -1,7 +1,9 @@
+from typing import List
 from sqlalchemy.orm import Session
 from src.auth.services.auth import get_current_user
 from src.database.session import get_db
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
+from src.messages.dtos.get_all_messages import GetAllMessagesDTO
 from src.messages.dtos.message_answer import MessageAnswerDTO
 from src.messages.dtos.message_update import MessageUpdateDTO
 from src.messages.enums.sender_enum import SenderEnum
@@ -16,21 +18,24 @@ from src.messages.services.messages import (
 router = APIRouter(prefix="/messages")
 
 
-@router.get("/user/{user_id}")
+@router.get(
+    "/user/{user_id}",
+    response_model=List[GetAllMessagesDTO],
+    response_model_by_alias=True,
+)
 def get_all_messages_by_user(
     user_id: str, db: Session = Depends(get_db), current_user=Depends(get_current_user)
 ):
     return get_all_messages_by_user_id(db=db, user_id=user_id)
 
 
-@router.put("/{message_id}")
+@router.patch("/{message_id}")
 def update_message_content(
     message_id: str,
-    new_message_content=MessageUpdateDTO,
+    new_message_content: MessageUpdateDTO,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-
     return update_message(db=db, message_id=message_id, new_message=new_message_content)
 
 

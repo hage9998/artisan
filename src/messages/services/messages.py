@@ -76,11 +76,12 @@ def update_message(db: Session, message_id: str, new_message: MessageUpdateDTO):
     """
 
     current_message = db.query(Message).filter(Message.id == message_id).first()
+    print(f"Tipo de new_message: {type(new_message)}")  # Verifique o tipo
 
     if not current_message:
         raise HTTPException(status_code=404, detail="Message not found")
 
-    current_message.message = new_message
+    current_message.message = new_message.message
 
     db.commit()
 

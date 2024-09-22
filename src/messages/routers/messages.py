@@ -3,9 +3,15 @@ from src.auth.services.auth import get_current_user
 from src.database.session import get_db
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 from src.messages.dtos.message_answer import MessageAnswerDTO
+from src.messages.dtos.message_update import MessageUpdateDTO
 from src.messages.enums.sender_enum import SenderEnum
 from src.messages.services.websocket_manager import manager
-from src.messages.services.messages import get_all_messages_by_user_id, save_message
+from src.messages.services.messages import (
+    delete_message,
+    get_all_messages_by_user_id,
+    save_message,
+    update_message,
+)
 
 router = APIRouter(prefix="/messages")
 
@@ -15,6 +21,26 @@ def get_all_messages_by_user(
     user_id: str, db: Session = Depends(get_db), current_user=Depends(get_current_user)
 ):
     return get_all_messages_by_user_id(db=db, user_id=user_id)
+
+
+@router.put("/{message_id}")
+def update_message_content(
+    message_id: str,
+    new_message_content=MessageUpdateDTO,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+
+    return update_message(db=db, message_id=message_id, new_message=new_message_content)
+
+
+@router.delete("/{message_id}")
+def delete_message_by_id(
+    message_id: str,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    return delete_message(db=db, message_id=message_id)
 
 
 @router.websocket("/ws/chat/{user_id}")

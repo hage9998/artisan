@@ -1,11 +1,10 @@
 import uuid
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 from passlib.hash import bcrypt
 from src.database.session import get_db
 from src.users.models.users import User
 from fastapi.security import OAuth2PasswordBearer
-import secrets
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

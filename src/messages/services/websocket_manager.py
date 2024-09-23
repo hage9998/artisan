@@ -1,6 +1,4 @@
-from typing import Dict
 from fastapi import WebSocket
-
 from src.messages.dtos.message_answer import MessageAnswerDTO
 
 
